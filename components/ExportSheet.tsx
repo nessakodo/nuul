@@ -55,7 +55,7 @@ export default function ExportSheet({
             step={0.02}
             value={quality}
             onChange={(event) => onQualityChange(Number(event.target.value))}
-            className="w-full"
+            className="w-full range-theme"
             aria-label="Export quality"
           />
           <div className="mt-1 text-xs">{Math.round(quality * 100)}%</div>
@@ -66,14 +66,14 @@ export default function ExportSheet({
         <button
           type="button"
           onClick={onExport}
-          className="w-full rounded-full bg-[color:var(--accent)] px-4 py-3 text-sm font-semibold text-black"
+          className="w-full rounded-full border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-[color:var(--text)] backdrop-blur"
         >
           Safe Export
         </button>
         <button
           type="button"
           onClick={onExportAsIs}
-          className="w-full rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs text-[color:var(--text)]"
+          className="w-full rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs text-[color:var(--text)] backdrop-blur"
         >
           Export As Is
         </button>

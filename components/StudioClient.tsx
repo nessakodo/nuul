@@ -305,6 +305,12 @@ export default function StudioClient() {
             </div>
           </div>
 
+          <div className="lg:hidden">
+            <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-xs text-[color:var(--muted)]">
+              Start with a filter or preset. Import a Lightroom preset for quick styling.
+            </div>
+          </div>
+
           <div>
             <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Filters</div>
             <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
@@ -316,9 +322,14 @@ export default function StudioClient() {
                   {label}
                 </button>
               ))}
-              <button className="col-span-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 text-left">
-                Upload LUT / Filter
-              </button>
+              <label className="col-span-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 text-left">
+                Import Lightroom preset (.xmp)
+                <input type="file" className="hidden" accept=".xmp" />
+              </label>
+              <label className="col-span-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 text-left">
+                Import LUT (.cube)
+                <input type="file" className="hidden" accept=".cube" />
+              </label>
             </div>
           </div>
 

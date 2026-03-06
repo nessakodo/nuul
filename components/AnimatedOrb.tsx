@@ -19,7 +19,19 @@ export default function AnimatedOrb() {
       loop: true
     });
 
-    return () => animation.pause();
+    const handler = (event: MouseEvent) => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 30;
+      const y = (event.clientY / window.innerHeight - 0.5) * 30;
+      orbRef.current?.style.setProperty("--orb-tilt-x", `${x}px`);
+      orbRef.current?.style.setProperty("--orb-tilt-y", `${y}px`);
+    };
+
+    window.addEventListener("mousemove", handler);
+
+    return () => {
+      window.removeEventListener("mousemove", handler);
+      animation.pause();
+    };
   }, []);
 
   return (
@@ -27,6 +39,7 @@ export default function AnimatedOrb() {
       <div
         ref={orbRef}
         className="orb absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{ transform: "translate(-50%, -50%) translate(var(--orb-tilt-x, 0px), var(--orb-tilt-y, 0px))" }}
       />
     </div>
   );

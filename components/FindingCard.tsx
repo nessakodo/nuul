@@ -24,8 +24,8 @@ export default function FindingCard({
           <button
             type="button"
             onClick={onAction}
-            className={`rounded-full px-3 py-1 text-xs ${
-              active ? "bg-[color:var(--accent)] text-black" : "bg-white/20 text-[color:var(--text)]"
+            className={`rounded-full px-3 py-1 text-xs backdrop-blur ${
+              active ? "border border-white/30 bg-white/20 text-[color:var(--text)]" : "bg-white/10 text-[color:var(--text)]"
             }`}
           >
             {actionLabel}

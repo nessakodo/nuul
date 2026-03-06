@@ -3,9 +3,9 @@ interface RiskMeterProps {
 }
 
 const levels = {
-  social: { label: "Social safe", color: "bg-emerald-400/70" },
-  work: { label: "Work safe", color: "bg-amber-300/70" },
-  high: { label: "Sensitive", color: "bg-rose-400/70" }
+  social: { label: "Social safe", width: "35%" },
+  work: { label: "Work safe", width: "65%" },
+  high: { label: "Sensitive", width: "90%" }
 };
 
 export default function RiskMeter({ level }: RiskMeterProps) {
@@ -17,7 +17,13 @@ export default function RiskMeter({ level }: RiskMeterProps) {
         <span>{current.label}</span>
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-white/20">
-        <div className={`h-full ${current.color}`} style={{ width: level === "social" ? "35%" : level === "work" ? "65%" : "90%" }} />
+        <div
+          className="h-full"
+          style={{
+            width: current.width,
+            background: "linear-gradient(90deg, rgba(201,162,107,0.25), rgba(201,162,107,0.7))"
+          }}
+        />
       </div>
     </div>
   );
