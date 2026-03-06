@@ -311,9 +311,9 @@ export default function StudioClient() {
       ) : null}
       <GlassPanel className="p-5">
         <div className="space-y-6">
-          <div>
-          <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Import</div>
-          <div className="mt-3 flex flex-col gap-3">
+          <div className="order-2 lg:order-3">
+            <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Import</div>
+            <div className="mt-3 flex flex-col gap-3">
               <button
                 className="rounded-2xl border border-white/10 bg-white/10 px-4 py-6 text-left text-sm backdrop-blur"
                 onDrop={onDrop}
@@ -337,20 +337,20 @@ export default function StudioClient() {
             </div>
           </div>
 
-          <div>
+          <div className="order-4">
             <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Presets</div>
             <div className="mt-3">
               <PresetSelector current={preset} onChange={setPreset} />
             </div>
           </div>
 
-          <div className="lg:hidden">
+          <div className="order-1 lg:order-1 lg:hidden">
             <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-xs text-[color:var(--muted)]">
               Start with a filter or preset. Import a Lightroom preset for quick styling.
             </div>
           </div>
 
-          <div>
+          <div className="order-0 lg:order-2">
             <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Filters</div>
             <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
               {["Graphite", "Warm Film", "Soft Grain", "Noir"].map((label) => (
@@ -486,6 +486,13 @@ export default function StudioClient() {
           onExport={onExport}
           onExportAsIs={onExportAsIs}
         />
+        <GlassPanel className="p-4">
+          <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Signal panel</div>
+          <div className="mt-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-[color:var(--muted)]">
+            Chic exports, minimal risk. Filter first on mobile, then sanitize with confidence. Built to feel like a
+            studio, not a security tool.
+          </div>
+        </GlassPanel>
         {processing ? (
           <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-xs text-[color:var(--muted)]">
             Processing…

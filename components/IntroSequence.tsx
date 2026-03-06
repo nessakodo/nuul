@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import anime from "animejs";
-import { playChime } from "@/lib/sfx";
+import { playChime, playHover, playReveal } from "@/lib/sfx";
 import Link from "next/link";
 
 const introKey = "nuul-intro-seen";
@@ -10,6 +10,7 @@ const introKey = "nuul-intro-seen";
 export default function IntroSequence() {
   const [visible, setVisible] = useState(false);
   const [phase, setPhase] = useState(0);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const seen = sessionStorage.getItem(introKey) === "true";
@@ -38,6 +39,52 @@ export default function IntroSequence() {
     });
   }, [visible]);
 
+  useEffect(() => {
+    if (!visible || !canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const points = Array.from({ length: 140 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -Math.random() * 0.35 - 0.05,
+      r: Math.random() * 1.8 + 0.4,
+      a: Math.random() * 0.35 + 0.05
+    }));
+
+    let raf = 0;
+    const tick = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      points.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.y < -20) {
+          p.y = canvas.height + 20;
+          p.x = Math.random() * canvas.width;
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201,162,107,${p.a})`;
+        ctx.fill();
+      });
+      raf = requestAnimationFrame(tick);
+    };
+    tick();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(raf);
+    };
+  }, [visible]);
+
   const ready = useMemo(() => phase >= 4, [phase]);
 
   if (!visible) return null;
@@ -45,6 +92,7 @@ export default function IntroSequence() {
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 text-white">
       <div className="absolute inset-0">
+        <canvas ref={canvasRef} className="absolute inset-0 opacity-70" />
         <div className="nuul-intro-orb orb absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full" />
       </div>
 
@@ -66,14 +114,16 @@ export default function IntroSequence() {
         >
           <Link
             href="/studio"
-            onClick={() => playChime()}
+            onClick={() => playReveal()}
+            onMouseEnter={() => playHover()}
             className="rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-xs uppercase tracking-[0.2em] backdrop-blur"
           >
             Enter Studio
           </Link>
           <Link
             href="/studio"
-            onClick={() => playChime()}
+            onClick={() => playReveal()}
+            onMouseEnter={() => playHover()}
             className="rounded-2xl border border-white/10 bg-white/5 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white/70"
           >
             Start With Filters
