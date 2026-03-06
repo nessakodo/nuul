@@ -305,6 +305,23 @@ export default function StudioClient() {
             </div>
           </div>
 
+          <div>
+            <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Filters</div>
+            <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+              {["Graphite", "Warm Film", "Soft Grain", "Noir"].map((label) => (
+                <button
+                  key={label}
+                  className="rounded-full border border-white/10 bg-white/10 px-3 py-2 text-left"
+                >
+                  {label}
+                </button>
+              ))}
+              <button className="col-span-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 text-left">
+                Upload LUT / Filter
+              </button>
+            </div>
+          </div>
+
           <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-xs text-[color:var(--muted)]">
             {fileInfo ? (
               <div className="space-y-2">

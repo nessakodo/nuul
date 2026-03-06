@@ -17,6 +17,25 @@ npm run build
 npm start
 ```
 
+## Mobile (iOS via Capacitor)
+
+```bash
+npm run build:export
+npm run mobile:sync
+npm run mobile:ios
+```
+
+## Desktop (Electron)
+
+```bash
+npm run build:export
+npm run desktop:dev
+```
+
+```bash
+npm run desktop:build
+```
+
 ## Privacy promise
 
 - Files never leave your device unless you export them.

@@ -37,10 +37,13 @@ export default function LaunchVeil() {
       ref={veilRef}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 text-center text-sm text-white"
     >
-      <div className="rounded-3xl border border-white/20 bg-white/10 px-6 py-5 backdrop-blur">
-        <div className="text-[0.6rem] uppercase tracking-[0.4em] text-white/60">NUUL</div>
-        <div className="mt-2 text-base">Safe Export Studio</div>
-        <div className="mt-1 text-xs text-white/60">Local first. No uploads. No accounts.</div>
+      <div className="relative">
+        <div className="orb absolute inset-0 -z-10 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full" />
+        <div className="rounded-3xl border border-white/20 bg-white/10 px-6 py-5 backdrop-blur">
+          <div className="text-[0.6rem] uppercase tracking-[0.4em] text-white/60">NUUL</div>
+          <div className="mt-2 text-base">Safe Export Studio</div>
+          <div className="mt-1 text-xs text-white/60">Local first. No uploads. No accounts.</div>
+        </div>
       </div>
     </div>
   );
