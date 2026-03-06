@@ -91,6 +91,22 @@ export default function LandingPage() {
     document.getElementById("filters")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
+  const safeReveal = () => {
+    try {
+      playReveal();
+    } catch {
+      // Ignore audio failures.
+    }
+  };
+
+  const safeHover = () => {
+    try {
+      playHover();
+    } catch {
+      // Ignore audio failures.
+    }
+  };
+
   return (
     <div className="relative min-h-screen">
       <GradientBackdrop />
@@ -116,7 +132,7 @@ export default function LandingPage() {
       </nav>
       <section
         ref={heroRef}
-        className="relative flex min-h-[96vh] flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-10 text-center text-white"
+        className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-10 text-center text-white"
       >
         <div className="pointer-events-none absolute inset-0">
           <canvas ref={canvasRef} className="absolute inset-0 opacity-70" />
@@ -136,10 +152,10 @@ export default function LandingPage() {
           <div className="hero-reveal mt-10 grid gap-3">
             <button
               onClick={() => {
-                playReveal();
+                safeReveal();
                 handleScroll();
               }}
-              onMouseEnter={() => playHover()}
+              onMouseEnter={() => safeHover()}
               className="rounded-2xl border border-white/30 bg-white/15 px-6 py-3 text-xs uppercase tracking-[0.2em] backdrop-blur transition hover:border-white/60"
             >
               Start with filters
@@ -147,16 +163,16 @@ export default function LandingPage() {
             <div className="grid gap-3 sm:grid-cols-2">
               <Link
                 href="/studio?import=1"
-                onClick={() => playReveal()}
-                onMouseEnter={() => playHover()}
+                onClick={() => safeReveal()}
+                onMouseEnter={() => safeHover()}
                 className="rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white/80 backdrop-blur transition hover:border-white/50"
               >
                 Safe export
               </Link>
               <Link
                 href="/studio"
-                onClick={() => playReveal()}
-                onMouseEnter={() => playHover()}
+                onClick={() => safeReveal()}
+                onMouseEnter={() => safeHover()}
                 className="rounded-2xl border border-white/10 bg-white/5 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white/60 backdrop-blur transition hover:border-white/40"
               >
                 Advanced studio
@@ -164,8 +180,8 @@ export default function LandingPage() {
             </div>
             <Link
               href="/receipts"
-              onClick={() => playReveal()}
-              onMouseEnter={() => playHover()}
+              onClick={() => safeReveal()}
+              onMouseEnter={() => safeHover()}
               className="mt-2 text-xs uppercase tracking-[0.3em] text-white/50"
             >
               Explore receipts
@@ -178,7 +194,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="filters" className="relative z-10 px-6 pb-20 pt-8">
+      <section id="filters" className="relative z-10 px-6 pb-24 pt-8">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col gap-3 text-white">
             <div className="text-[0.65rem] uppercase tracking-[0.4em] text-white/50">Filter first</div>
@@ -189,12 +205,17 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="mt-10 columns-2 gap-4 space-y-4 md:columns-3 lg:columns-4">
+          <div className="masonry-3d mt-10 columns-2 gap-4 space-y-4 md:columns-3 lg:columns-4">
             {filters.map((filter, index) => (
               <div
                 key={filter.name}
-                className={`relative break-inside-avoid overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${filter.className} p-5 shadow-[0_30px_80px_rgba(0,0,0,0.35)]`}
-                style={{ height: `${220 + (index % 3) * 60}px` }}
+                className={`filter-tile relative break-inside-avoid overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${filter.className} p-5 shadow-[0_30px_80px_rgba(0,0,0,0.35)]`}
+                style={{
+                  height: `${220 + (index % 3) * 60}px`,
+                  animationDelay: `${index * 0.18}s`,
+                  animationDuration: `${16 + (index % 4) * 3}s`,
+                  ["--tilt" as "string"]: `${(index % 2 === 0 ? 1 : -1) * (6 + (index % 3) * 3)}deg`
+                }}
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.12),transparent_55%)]" />
                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/70 to-transparent" />
@@ -206,7 +227,10 @@ export default function LandingPage() {
             ))}
           </div>
 
-          <div className="mt-12 grid gap-6 rounded-3xl border border-white/10 bg-white/5 p-6 text-white backdrop-blur lg:grid-cols-[1.2fr_0.8fr]">
+          <div
+            id="upload-cta"
+            className="cta-rise mt-12 grid gap-6 rounded-3xl border border-white/10 bg-white/5 p-6 text-white backdrop-blur lg:grid-cols-[1.2fr_0.8fr]"
+          >
             <div>
               <div className="text-[0.6rem] uppercase tracking-[0.35em] text-white/50">Designed to protect in style</div>
               <h3 className="mt-3 text-2xl font-semibold">Upload your screenshot. We’ll keep the story, drop the leaks.</h3>
@@ -217,12 +241,12 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center justify-center">
               <Link
-                href="/studio?import=1"
-                onClick={() => playReveal()}
-                onMouseEnter={() => playHover()}
+                href="/studio?import=1&mode=filters"
+                onClick={() => safeReveal()}
+                onMouseEnter={() => safeHover()}
                 className="glow-cta rounded-full border border-white/20 bg-white/15 px-6 py-3 text-xs uppercase tracking-[0.3em] text-white backdrop-blur transition hover:border-white/50"
               >
-                Upload your own
+                Upload your image(s)
               </Link>
             </div>
           </div>

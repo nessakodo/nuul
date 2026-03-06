@@ -131,6 +131,45 @@ button {
   animation: scanline 6s linear infinite;
 }
 
+.masonry-3d {
+  perspective: 1200px;
+}
+
+.filter-tile {
+  transform-style: preserve-3d;
+  animation-name: tileFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes tileFloat {
+  0% {
+    transform: rotateY(var(--tilt, 8deg)) translateY(0px);
+  }
+  50% {
+    transform: rotateY(calc(var(--tilt, 8deg) * -1)) translateY(-12px);
+  }
+  100% {
+    transform: rotateY(var(--tilt, 8deg)) translateY(0px);
+  }
+}
+
+.cta-rise {
+  animation: ctaRise 1.2s ease-out both;
+}
+
+@keyframes ctaRise {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .glow-cta {
   position: relative;
   overflow: hidden;
