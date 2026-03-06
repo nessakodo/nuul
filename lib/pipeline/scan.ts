@@ -12,7 +12,7 @@ export async function scanImage(
 ): Promise<ScanFindings> {
   let exif: Record<string, unknown> | null = null;
   try {
-    exif = await exifr.parse(file, { tiff: true, ifd0: true, exif: true, gps: true });
+    exif = await exifr.parse(file, { tiff: true, exif: true, gps: true } as any);
   } catch {
     exif = null;
   }
