@@ -17,8 +17,8 @@ export default function StudioHome() {
   }, []);
 
   const tabs = useMemo(() => {
-    const base = [{ id: "studio", label: "Studio" as const }];
-    if (enhancedEnabled) base.push({ id: "enhanced", label: "Enhanced" as const });
+    const base: Array<{ id: "studio" | "enhanced"; label: string }> = [{ id: "studio", label: "Studio" }];
+    if (enhancedEnabled) base.push({ id: "enhanced", label: "Enhanced" });
     return base;
   }, [enhancedEnabled]);
 
