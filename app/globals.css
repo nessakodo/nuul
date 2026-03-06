@@ -131,6 +131,32 @@ button {
   animation: scanline 6s linear infinite;
 }
 
+.glow-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-cta::after {
+  content: "";
+  position: absolute;
+  inset: -40% -60%;
+  background: radial-gradient(circle, rgba(201, 162, 107, 0.7), transparent 65%);
+  opacity: 0.4;
+  animation: glowOrb 6s ease-in-out infinite;
+}
+
+@keyframes glowOrb {
+  0% {
+    transform: translate(-10%, -10%);
+  }
+  50% {
+    transform: translate(10%, 12%);
+  }
+  100% {
+    transform: translate(-10%, -10%);
+  }
+}
+
 @keyframes scanline {
   0% {
     transform: translateY(-10%);

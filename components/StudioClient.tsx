@@ -45,6 +45,7 @@ export default function StudioClient() {
   const fileRef = useRef<File | null>(null);
   const bitmapRef = useRef<ImageBitmap | null>(null);
   const analysisScaleRef = useRef<number>(1);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const riskLevel = useMemo<RiskLevel>(() => {
     if (!findings) return "social";
@@ -105,11 +106,17 @@ export default function StudioClient() {
     const isMobile = window.innerWidth < 900;
     const params = new URLSearchParams(window.location.search);
     const mode = params.get("mode");
+    const importNow = params.get("import") === "1";
     if (mode === "filters") {
       setShowFilterOnboarding(true);
       return;
     }
     if (!seen && isMobile) setShowFilterOnboarding(true);
+    if (importNow) {
+      window.setTimeout(() => {
+        fileInputRef.current?.click();
+      }, 200);
+    }
   }, []);
 
   const onDrop = (event: React.DragEvent<HTMLButtonElement>) => {
@@ -337,7 +344,7 @@ export default function StudioClient() {
                 </button>
                 <label className="rounded-full border border-white/10 bg-white/10 px-3 py-2 text-center">
                   Pick file
-                  <input type="file" className="hidden" onChange={onPick} accept="image/*" />
+                  <input ref={fileInputRef} type="file" className="hidden" onChange={onPick} accept="image/*" />
                 </label>
               </div>
             </div>

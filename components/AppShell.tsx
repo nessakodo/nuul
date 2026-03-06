@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import IntroSequence from "@/components/IntroSequence";
 
 const tabs = [
   { href: "/studio", label: "Studio" },
@@ -15,7 +14,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen px-6 pb-12 pt-8 lg:px-12">
-      <IntroSequence />
       <nav className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-4 md:grid-cols-[1fr_auto_1fr]">
         <div className="text-center text-lg font-semibold tracking-[0.3em] md:text-left">NUUL</div>
         <div className="flex justify-center">
