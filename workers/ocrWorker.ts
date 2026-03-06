@@ -8,7 +8,7 @@ async function getWorker() {
       workerPath: "/tesseract/worker.min.js",
       langPath: "/tesseract/lang-data",
       corePath: "/tesseract/tesseract-core.wasm.js"
-    });
+    } as any);
     await workerPromise.load();
     await workerPromise.loadLanguage("eng");
     await workerPromise.initialize("eng");
