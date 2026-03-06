@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import anime from "animejs";
 import { playHover, playReveal, startDrone } from "@/lib/sfx";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const introKey = "nuul-intro-seen";
 
@@ -12,11 +12,11 @@ export default function IntroSequence() {
   const [phase, setPhase] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const force = searchParams.get("intro") === "1";
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const force = params.get("intro") === "1";
     const seen = sessionStorage.getItem(introKey) === "true";
     if (seen && !force) return;
     setVisible(true);
@@ -28,7 +28,7 @@ export default function IntroSequence() {
       window.setTimeout(() => setPhase(4), 2600)
     ];
     return () => timers.forEach((t) => window.clearTimeout(t));
-  }, [pathname, searchParams]);
+  }, []);
 
   useEffect(() => {
     if (!visible) return;
