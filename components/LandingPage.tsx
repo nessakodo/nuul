@@ -110,7 +110,7 @@ export default function LandingPage() {
   return (
     <div className="relative min-h-screen">
       <GradientBackdrop />
-      <nav className="relative z-20 mx-auto grid max-w-6xl grid-cols-1 items-center gap-4 px-6 pt-8 md:grid-cols-[1fr_auto_1fr]">
+      <nav className="relative z-20 mx-auto hidden max-w-6xl grid-cols-1 items-center gap-4 px-6 pt-8 md:grid md:grid-cols-[1fr_auto_1fr]">
         <div className="text-center text-lg font-semibold tracking-[0.3em] text-white md:text-left">NUUL</div>
         <div className="flex justify-center">
           <div className="flex gap-2 rounded-full border border-white/10 bg-white/10 px-2 py-1 text-xs text-white/70 backdrop-blur">
@@ -138,6 +138,7 @@ export default function LandingPage() {
           <canvas ref={canvasRef} className="absolute inset-0 opacity-70" />
           <div className="scanline-layer absolute inset-0 opacity-30" />
           <div className="orb absolute left-1/2 top-1/2 h-[680px] w-[680px] -translate-x-1/2 -translate-y-1/2 rounded-full" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/55 to-black/90" />
         </div>
 
         <div className="relative z-10 max-w-2xl">
