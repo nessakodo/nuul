@@ -20,6 +20,7 @@ npm start
 ## Mobile (iOS via Capacitor)
 
 ```bash
+npx cap add ios
 npm run build:export
 npm run mobile:sync
 npm run mobile:ios
