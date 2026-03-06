@@ -53,9 +53,9 @@ body {
 }
 
 :root[data-theme="dreamy"] body {
-  background-image: radial-gradient(circle at 15% 20%, rgba(173, 124, 194, 0.25), transparent 48%),
-    radial-gradient(circle at 85% 20%, rgba(242, 163, 183, 0.22), transparent 55%),
-    radial-gradient(circle at 50% 90%, rgba(115, 97, 168, 0.3), transparent 55%);
+  background-image: radial-gradient(circle at 15% 20%, rgba(179, 150, 104, 0.18), transparent 48%),
+    radial-gradient(circle at 85% 20%, rgba(120, 112, 104, 0.16), transparent 55%),
+    radial-gradient(circle at 50% 90%, rgba(210, 180, 135, 0.2), transparent 55%);
 }
 
 h1, h2, h3 {
