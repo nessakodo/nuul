@@ -1,17 +1,20 @@
 import { createWorker } from "tesseract.js";
 
-let workerPromise: ReturnType<typeof createWorker> | null = null;
+let workerPromise: Promise<Awaited<ReturnType<typeof createWorker>>> | null = null;
 
 async function getWorker() {
   if (!workerPromise) {
-    workerPromise = createWorker({
-      workerPath: "/tesseract/worker.min.js",
-      langPath: "/tesseract/lang-data",
-      corePath: "/tesseract/tesseract-core.wasm.js"
-    } as any);
-    await workerPromise.load();
-    await workerPromise.loadLanguage("eng");
-    await workerPromise.initialize("eng");
+    workerPromise = (async () => {
+      const worker = await createWorker({
+        workerPath: "/tesseract/worker.min.js",
+        langPath: "/tesseract/lang-data",
+        corePath: "/tesseract/tesseract-core.wasm.js"
+      } as any);
+      await worker.load();
+      await worker.loadLanguage("eng");
+      await worker.initialize("eng");
+      return worker;
+    })();
   }
   return workerPromise;
 }
