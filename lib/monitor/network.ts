@@ -25,7 +25,7 @@ export function installNetworkMonitor() {
     const originalSend = xhr.send;
     xhr.send = function (...sendArgs) {
       setCount(count + 1);
-      return originalSend.apply(xhr, sendArgs as unknown as [Document | BodyInit | null | undefined]);
+      return originalSend.apply(xhr, sendArgs as Parameters<XMLHttpRequest["send"]>);
     };
     return xhr;
   } as unknown as typeof XMLHttpRequest;
