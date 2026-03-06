@@ -5,11 +5,11 @@ let workerPromise: Promise<Awaited<ReturnType<typeof createWorker>>> | null = nu
 async function getWorker() {
   if (!workerPromise) {
     workerPromise = (async () => {
-      const worker = await createWorker({
+      const worker = (await createWorker({
         workerPath: "/tesseract/worker.min.js",
         langPath: "/tesseract/lang-data",
         corePath: "/tesseract/tesseract-core.wasm.js"
-      } as any);
+      } as any)) as any;
       await worker.load();
       await worker.loadLanguage("eng");
       await worker.initialize("eng");
