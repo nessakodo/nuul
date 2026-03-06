@@ -27,6 +27,7 @@ const presetOptions = {
 const receiptKey = "nuul-receipts";
 
 type ExportFormat = "keep" | "image/jpeg" | "image/png" | "image/webp";
+type ExportOutputFormat = "image/jpeg" | "image/png" | "image/webp";
 
 export default function StudioClient() {
   const [preset, setPreset] = useState<RiskLevel>("work");
@@ -125,7 +126,11 @@ export default function StudioClient() {
     if (!bitmapRef.current || !fileInfo || !findings) return;
     setProcessing(true);
     const options = presetOptions[preset];
-    const formatToUse = exportFormat === "keep" ? (fileInfo.type as ExportFormat) : exportFormat;
+    const formatToUse = exportFormat === "keep" ? (fileInfo.type as ExportOutputFormat) : exportFormat;
+    const resolvedFormat: ExportOutputFormat =
+      formatToUse === "image/jpeg" || formatToUse === "image/webp" || formatToUse === "image/png"
+        ? formatToUse
+        : "image/png";
     const analysisScale = analysisScaleRef.current || 1;
     const blurRegions = findings.codes.map((code) => ({
       ...code,
@@ -139,11 +144,11 @@ export default function StudioClient() {
     const cropTop = autoCropEnabled && findings.topBarHeight ? findings.topBarHeight / analysisScale : 0;
 
     const output = await exportSanitized(bitmapRef.current, {
-      format: formatToUse || "image/png",
+      format: resolvedFormat,
       maxEdge: options.maxEdge,
       blurRegions,
       addGrain: options.addGrain,
-      quality: formatToUse === "image/png" ? undefined : exportQuality,
+      quality: resolvedFormat === "image/png" ? undefined : exportQuality,
       cropTop
     });
 
@@ -210,10 +215,14 @@ export default function StudioClient() {
   const onExportAsIs = async () => {
     if (!bitmapRef.current || !fileInfo) return;
     setProcessing(true);
-    const formatToUse = exportFormat === "keep" ? (fileInfo.type as ExportFormat) : exportFormat;
+    const formatToUse = exportFormat === "keep" ? (fileInfo.type as ExportOutputFormat) : exportFormat;
+    const resolvedFormat: ExportOutputFormat =
+      formatToUse === "image/jpeg" || formatToUse === "image/webp" || formatToUse === "image/png"
+        ? formatToUse
+        : "image/png";
     const output = await exportSanitized(bitmapRef.current, {
-      format: formatToUse || "image/png",
-      quality: formatToUse === "image/png" ? undefined : exportQuality
+      format: resolvedFormat,
+      quality: resolvedFormat === "image/png" ? undefined : exportQuality
     });
 
     const exportFile: FileInfo = {
