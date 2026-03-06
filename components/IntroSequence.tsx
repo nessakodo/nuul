@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import anime from "animejs";
 import { playHover, playReveal, startDrone } from "@/lib/sfx";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const introKey = "nuul-intro-seen";
 
@@ -11,7 +11,6 @@ export default function IntroSequence() {
   const [visible, setVisible] = useState(false);
   const [phase, setPhase] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -103,6 +102,15 @@ export default function IntroSequence() {
 
   if (!visible) return null;
 
+  const handleChoice = () => {
+    try {
+      playReveal();
+    } catch {
+      // If audio fails, continue navigation.
+    }
+    setVisible(false);
+  };
+
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 text-white backdrop-blur-md">
       <div className="pointer-events-none absolute inset-0">
@@ -132,12 +140,10 @@ export default function IntroSequence() {
             { label: "Enter safe export", href: "/studio", tone: "secondary" },
             { label: "Explore receipts", href: "/receipts", tone: "ghost" }
           ].map((action) => (
-            <button
+            <Link
               key={action.label}
-              onClick={() => {
-                playReveal();
-                router.push(action.href);
-              }}
+              href={action.href}
+              onClick={() => handleChoice()}
               onMouseEnter={() => playHover()}
               className={`rounded-2xl border px-6 py-3 text-xs uppercase tracking-[0.2em] backdrop-blur transition ${
                 action.tone === "primary"
@@ -148,7 +154,7 @@ export default function IntroSequence() {
               }`}
             >
               {action.label}
-            </button>
+            </Link>
           ))}
         </div>
       </div>
