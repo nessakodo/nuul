@@ -12,6 +12,7 @@ export default function SettingsPage() {
   const [vaultEnabled, setVaultEnabled] = useState(false);
   const [networkCount, setNetworkCount] = useState(0);
   const [overlayEnabled, setOverlayEnabled] = useState(false);
+  const [sfxEnabled, setSfxEnabled] = useState(false);
 
   useEffect(() => {
     const loaded = loadTheme();
@@ -21,6 +22,7 @@ export default function SettingsPage() {
 
   useEffect(() => {
     setOverlayEnabled(window.localStorage.getItem("nuul-dev-overlay") === "true");
+    setSfxEnabled(window.localStorage.getItem("nuul-sfx") === "true");
     const timer = window.setInterval(() => {
       setNetworkCount(getNetworkCount());
     }, 1000);
@@ -81,6 +83,29 @@ export default function SettingsPage() {
                   onClick={() => setVaultEnabled((prev) => !prev)}
                 >
                   {vaultEnabled ? "Enabled" : "Disabled"}
+                </button>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-semibold">Sound FX</div>
+                  <div className="text-xs text-[color:var(--muted)]">
+                    Subtle chime on first interaction. Never recorded.
+                  </div>
+                </div>
+                <button
+                  className={`rounded-full px-4 py-2 text-xs ${
+                    sfxEnabled ? "bg-[color:var(--accent)] text-black" : "bg-white/10"
+                  }`}
+                  onClick={() => {
+                    const next = !sfxEnabled;
+                    setSfxEnabled(next);
+                    window.localStorage.setItem("nuul-sfx", String(next));
+                  }}
+                >
+                  {sfxEnabled ? "On" : "Off"}
                 </button>
               </div>
             </div>

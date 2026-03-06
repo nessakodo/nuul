@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import LaunchVeil from "@/components/LaunchVeil";
 
 const tabs = [
   { href: "/studio", label: "Studio" },
@@ -14,6 +15,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen px-6 pb-12 pt-8 lg:px-12">
+      <LaunchVeil />
       <nav className="flex flex-wrap items-center justify-between gap-4">
         <div className="text-lg font-semibold tracking-[0.3em]">NUUL</div>
         <div className="flex gap-2 rounded-full border border-white/10 bg-white/10 px-2 py-1 text-sm">

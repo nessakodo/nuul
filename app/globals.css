@@ -6,24 +6,30 @@
   color-scheme: light;
   --bg: #f4efeb;
   --panel: rgba(246, 242, 239, 0.65);
-  --panel-border: rgba(255, 255, 255, 0.4);
-  --text: #1a120f;
-  --muted: #615b58;
-  --accent: #c48b6c;
-  --accent-2: #8e6a58;
-  --ring: rgba(195, 130, 95, 0.35);
+  --panel-border: rgba(255, 255, 255, 0.5);
+  --text: #1b1512;
+  --muted: #6a615d;
+  --accent: #c99376;
+  --accent-2: #9a7b6b;
+  --ring: rgba(201, 147, 118, 0.45);
+  --orb-1: rgba(218, 176, 155, 0.55);
+  --orb-2: rgba(179, 197, 230, 0.45);
+  --orb-3: rgba(230, 205, 190, 0.5);
 }
 
 :root[data-theme="dreamy"] {
   color-scheme: dark;
-  --bg: #0c0b10;
-  --panel: rgba(18, 16, 24, 0.68);
+  --bg: #0b0b12;
+  --panel: rgba(18, 16, 24, 0.72);
   --panel-border: rgba(255, 255, 255, 0.08);
-  --text: #f5edf0;
-  --muted: #c0b6c7;
-  --accent: #e2a0b4;
-  --accent-2: #b8a0da;
-  --ring: rgba(226, 160, 180, 0.4);
+  --text: #f6eef1;
+  --muted: #c7bccf;
+  --accent: #e0a1b7;
+  --accent-2: #b9a4d7;
+  --ring: rgba(224, 161, 183, 0.45);
+  --orb-1: rgba(148, 110, 190, 0.35);
+  --orb-2: rgba(238, 164, 186, 0.3);
+  --orb-3: rgba(120, 96, 170, 0.38);
 }
 
 * {
@@ -40,9 +46,9 @@ html, body {
 }
 
 body {
-  background-image: radial-gradient(circle at 20% 20%, rgba(255, 223, 199, 0.45), transparent 45%),
-    radial-gradient(circle at 80% 30%, rgba(196, 213, 255, 0.35), transparent 55%),
-    radial-gradient(circle at 50% 85%, rgba(243, 227, 210, 0.4), transparent 50%);
+  background-image: radial-gradient(circle at 20% 20%, rgba(255, 223, 199, 0.35), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(196, 213, 255, 0.25), transparent 55%),
+    radial-gradient(circle at 50% 85%, rgba(243, 227, 210, 0.3), transparent 50%);
   transition: background 0.4s ease, color 0.4s ease;
 }
 
@@ -69,10 +75,18 @@ button {
 .glass {
   background: var(--panel);
   border: 1px solid var(--panel-border);
-  box-shadow: 0 24px 60px rgba(14, 10, 8, 0.18);
+  box-shadow: 0 24px 60px rgba(12, 10, 14, 0.2);
   backdrop-filter: blur(18px);
 }
 
 .mesh-animate {
   animation: mesh 18s ease-in-out infinite;
+}
+
+.orb {
+  background: radial-gradient(circle at 30% 30%, var(--orb-1), transparent 60%),
+    radial-gradient(circle at 70% 40%, var(--orb-2), transparent 65%),
+    radial-gradient(circle at 40% 75%, var(--orb-3), transparent 60%);
+  filter: blur(30px);
+  opacity: 0.85;
 }

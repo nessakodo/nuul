@@ -14,11 +14,11 @@ export default function FindingCard({
   onAction
 }: FindingCardProps) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+    <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h4 className="text-sm font-semibold text-[color:var(--text)]">{title}</h4>
-          <p className="mt-1 text-xs text-[color:var(--muted)]">{description}</p>
+          <p className="mt-1 text-sm text-[color:var(--muted)]">{description}</p>
         </div>
         {actionLabel ? (
           <button

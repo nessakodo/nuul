@@ -8,6 +8,7 @@ export function applyTheme(theme: ThemeMode) {
 export function loadTheme(): ThemeMode {
   if (typeof window === "undefined") return "warm";
   const stored = window.localStorage.getItem("nuul-theme");
+  if (!stored) return "dreamy";
   return stored === "dreamy" ? "dreamy" : "warm";
 }
 
