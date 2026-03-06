@@ -50,3 +50,36 @@ export function playReveal() {
   gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
   osc.stop(audioCtx.currentTime + 0.62);
 }
+
+let droneNodes: { osc1: OscillatorNode; osc2: OscillatorNode; gain: GainNode } | null = null;
+
+export function startDrone() {
+  if (typeof window === "undefined") return;
+  if (droneNodes) return;
+  const audioCtx = new (window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext!)();
+  const osc1 = audioCtx.createOscillator();
+  const osc2 = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc1.type = "sine";
+  osc2.type = "sine";
+  osc1.frequency.value = 54;
+  osc2.frequency.value = 81;
+  gain.gain.value = 0.0001;
+  osc1.connect(gain);
+  osc2.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc1.start();
+  osc2.start();
+  gain.gain.exponentialRampToValueAtTime(0.025, audioCtx.currentTime + 1.2);
+  droneNodes = { osc1, osc2, gain };
+}
+
+export function stopDrone() {
+  if (!droneNodes) return;
+  const { osc1, osc2, gain } = droneNodes;
+  const ctx = gain.context;
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1);
+  osc1.stop(ctx.currentTime + 1.1);
+  osc2.stop(ctx.currentTime + 1.1);
+  droneNodes = null;
+}

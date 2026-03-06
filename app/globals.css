@@ -119,3 +119,23 @@ button {
   border: 1px solid rgba(201, 162, 107, 0.6);
   box-shadow: 0 0 12px rgba(201, 162, 107, 0.35);
 }
+
+.scanline-layer {
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0) 6%,
+    rgba(255, 255, 255, 0.04) 12%
+  );
+  background-size: 100% 6px;
+  animation: scanline 6s linear infinite;
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateY(10%);
+  }
+}

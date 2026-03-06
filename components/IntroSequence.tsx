@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import anime from "animejs";
-import { playChime, playHover, playReveal } from "@/lib/sfx";
+import { playHover, playReveal } from "@/lib/sfx";
 import Link from "next/link";
+import { startDrone, stopDrone } from "@/lib/sfx";
 
 const introKey = "nuul-intro-seen";
 
@@ -37,6 +38,12 @@ export default function IntroSequence() {
       direction: "alternate",
       loop: true
     });
+  }, [visible]);
+
+  useEffect(() => {
+    if (!visible) return;
+    startDrone();
+    return () => stopDrone();
   }, [visible]);
 
   useEffect(() => {
@@ -90,9 +97,10 @@ export default function IntroSequence() {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 text-white">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 text-white backdrop-blur-md">
       <div className="absolute inset-0">
         <canvas ref={canvasRef} className="absolute inset-0 opacity-70" />
+        <div className="scanline-layer absolute inset-0 opacity-30" />
         <div className="nuul-intro-orb orb absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full" />
       </div>
 
@@ -108,26 +116,31 @@ export default function IntroSequence() {
         </div>
 
         <div
-          className={`mt-10 flex flex-wrap items-center justify-center gap-3 transition-all duration-700 ${
+          className={`mt-10 grid w-full max-w-lg gap-3 transition-all duration-700 ${
             ready ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          <Link
-            href="/studio"
-            onClick={() => playReveal()}
-            onMouseEnter={() => playHover()}
-            className="rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-xs uppercase tracking-[0.2em] backdrop-blur"
-          >
-            Enter Studio
-          </Link>
-          <Link
-            href="/studio"
-            onClick={() => playReveal()}
-            onMouseEnter={() => playHover()}
-            className="rounded-2xl border border-white/10 bg-white/5 px-6 py-3 text-xs uppercase tracking-[0.2em] text-white/70"
-          >
-            Start With Filters
-          </Link>
+          {[
+            { label: "Start with filters", href: "/studio", tone: "primary" },
+            { label: "Enter safe export", href: "/studio", tone: "secondary" },
+            { label: "Explore receipts", href: "/receipts", tone: "ghost" }
+          ].map((action) => (
+            <Link
+              key={action.label}
+              href={action.href}
+              onClick={() => playReveal()}
+              onMouseEnter={() => playHover()}
+              className={`rounded-2xl border px-6 py-3 text-xs uppercase tracking-[0.2em] backdrop-blur transition ${
+                action.tone === "primary"
+                  ? "border-white/30 bg-white/15 text-white"
+                  : action.tone === "secondary"
+                    ? "border-white/20 bg-white/10 text-white/80"
+                    : "border-white/10 bg-white/5 text-white/60"
+              }`}
+            >
+              {action.label}
+            </Link>
+          ))}
         </div>
       </div>
     </div>
