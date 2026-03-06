@@ -1,12 +1,12 @@
 import AppShell from "@/components/AppShell";
 import GradientBackdrop from "@/components/GradientBackdrop";
-import StudioClient from "@/components/StudioClient";
+import StudioHome from "@/components/StudioHome";
 
 export default function StudioPage() {
   return (
     <AppShell>
       <GradientBackdrop />
-      <StudioClient />
+      <StudioHome />
     </AppShell>
   );
 }

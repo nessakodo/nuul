@@ -13,6 +13,7 @@ export default function SettingsPage() {
   const [networkCount, setNetworkCount] = useState(0);
   const [overlayEnabled, setOverlayEnabled] = useState(false);
   const [sfxEnabled, setSfxEnabled] = useState(false);
+  const [enhancedEnabled, setEnhancedEnabled] = useState(false);
 
   useEffect(() => {
     const loaded = loadTheme();
@@ -23,6 +24,7 @@ export default function SettingsPage() {
   useEffect(() => {
     setOverlayEnabled(window.localStorage.getItem("nuul-dev-overlay") === "true");
     setSfxEnabled(window.localStorage.getItem("nuul-sfx") === "true");
+    setEnhancedEnabled(window.localStorage.getItem("nuul-enhanced") === "true");
     const timer = window.setInterval(() => {
       setNetworkCount(getNetworkCount());
     }, 1000);
@@ -129,6 +131,29 @@ export default function SettingsPage() {
                   }}
                 >
                   {overlayEnabled ? "On" : "Off"}
+                </button>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-semibold">Enhanced tools</div>
+                  <div className="text-xs text-[color:var(--muted)]">
+                    Unlock the advanced studio with detectors and manual tools.
+                  </div>
+                </div>
+                <button
+                  className={`rounded-full px-4 py-2 text-xs ${
+                    enhancedEnabled ? "bg-[color:var(--accent)] text-black" : "bg-white/10"
+                  }`}
+                  onClick={() => {
+                    const next = !enhancedEnabled;
+                    setEnhancedEnabled(next);
+                    window.localStorage.setItem("nuul-enhanced", String(next));
+                  }}
+                >
+                  {enhancedEnabled ? "On" : "Off"}
                 </button>
               </div>
             </div>

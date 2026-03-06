@@ -22,33 +22,48 @@ export function playHover() {
   if (typeof window === "undefined") return;
   const audioCtx = new (window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext!)();
   const osc = audioCtx.createOscillator();
+  const osc2 = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
-  osc.type = "sine";
-  osc.frequency.value = 980;
+  osc.type = "triangle";
+  osc2.type = "sine";
+  osc.frequency.value = 780;
+  osc2.frequency.value = 1170;
   gain.gain.value = 0.0001;
   osc.connect(gain);
+  osc2.connect(gain);
   gain.connect(audioCtx.destination);
   osc.start();
-  gain.gain.exponentialRampToValueAtTime(0.02, audioCtx.currentTime + 0.02);
-  gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.12);
-  osc.stop(audioCtx.currentTime + 0.14);
+  osc2.start();
+  gain.gain.exponentialRampToValueAtTime(0.03, audioCtx.currentTime + 0.04);
+  osc.frequency.exponentialRampToValueAtTime(520, audioCtx.currentTime + 0.12);
+  osc2.frequency.exponentialRampToValueAtTime(840, audioCtx.currentTime + 0.12);
+  gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.22);
+  osc.stop(audioCtx.currentTime + 0.24);
+  osc2.stop(audioCtx.currentTime + 0.24);
 }
 
 export function playReveal() {
   if (typeof window === "undefined") return;
   const audioCtx = new (window.AudioContext || (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext!)();
   const osc = audioCtx.createOscillator();
+  const osc2 = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
   osc.type = "triangle";
-  osc.frequency.value = 360;
+  osc2.type = "sine";
+  osc.frequency.value = 320;
+  osc2.frequency.value = 480;
   gain.gain.value = 0.0001;
   osc.connect(gain);
+  osc2.connect(gain);
   gain.connect(audioCtx.destination);
   osc.start();
-  gain.gain.exponentialRampToValueAtTime(0.06, audioCtx.currentTime + 0.08);
-  osc.frequency.exponentialRampToValueAtTime(520, audioCtx.currentTime + 0.4);
-  gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
-  osc.stop(audioCtx.currentTime + 0.62);
+  osc2.start();
+  gain.gain.exponentialRampToValueAtTime(0.07, audioCtx.currentTime + 0.08);
+  osc.frequency.exponentialRampToValueAtTime(540, audioCtx.currentTime + 0.38);
+  osc2.frequency.exponentialRampToValueAtTime(720, audioCtx.currentTime + 0.38);
+  gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.62);
+  osc.stop(audioCtx.currentTime + 0.64);
+  osc2.stop(audioCtx.currentTime + 0.64);
 }
 
 let droneNodes: { osc1: OscillatorNode; osc2: OscillatorNode; gain: GainNode } | null = null;

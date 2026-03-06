@@ -1,5 +1,5 @@
-import LandingPage from "@/components/LandingPage";
+import HomeCinematic from "@/components/HomeCinematic";
 
 export default function Home() {
-  return <LandingPage />;
+  return <HomeCinematic />;
 }
