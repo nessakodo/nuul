@@ -41,6 +41,7 @@ export default function StudioClient() {
   const [autoCropEnabled, setAutoCropEnabled] = useState(false);
   const [verification, setVerification] = useState<{ metadataPresent: boolean } | null>(null);
   const [ocrAvailable, setOcrAvailable] = useState(true);
+  const [showFilterOnboarding, setShowFilterOnboarding] = useState(false);
   const fileRef = useRef<File | null>(null);
   const bitmapRef = useRef<ImageBitmap | null>(null);
   const analysisScaleRef = useRef<number>(1);
@@ -97,6 +98,13 @@ export default function StudioClient() {
     },
     [previewUrl]
   );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const seen = window.localStorage.getItem("nuul-mobile-filters") === "true";
+    const isMobile = window.innerWidth < 900;
+    if (!seen && isMobile) setShowFilterOnboarding(true);
+  }, []);
 
   const onDrop = (event: React.DragEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -270,13 +278,44 @@ export default function StudioClient() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[280px_1fr_320px]">
+      {showFilterOnboarding ? (
+        <div className="fixed inset-0 z-[70] flex items-end bg-black/60 lg:hidden">
+          <div className="w-full rounded-t-3xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur">
+            <div className="text-xs uppercase tracking-[0.3em] text-white/60">Filters first</div>
+            <div className="mt-2 text-xl font-semibold">Pick a look before you edit</div>
+            <p className="mt-2 text-sm text-white/60">
+              Import a Lightroom preset or choose a mood. We’ll apply it before sanitization.
+            </p>
+            <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
+              {["Graphite", "Warm Film", "Soft Grain", "Noir"].map((label) => (
+                <button key={label} className="rounded-full border border-white/20 bg-white/10 px-3 py-2 text-left">
+                  {label}
+                </button>
+              ))}
+              <label className="col-span-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-left">
+                Import Lightroom preset (.xmp)
+                <input type="file" className="hidden" accept=".xmp" />
+              </label>
+            </div>
+            <button
+              className="mt-5 w-full rounded-full border border-white/20 bg-white/10 px-4 py-3 text-sm"
+              onClick={() => {
+                window.localStorage.setItem("nuul-mobile-filters", "true");
+                setShowFilterOnboarding(false);
+              }}
+            >
+              Continue to Studio
+            </button>
+          </div>
+        </div>
+      ) : null}
       <GlassPanel className="p-5">
         <div className="space-y-6">
           <div>
-            <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Import</div>
-            <div className="mt-3 flex flex-col gap-3">
+          <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Import</div>
+          <div className="mt-3 flex flex-col gap-3">
               <button
-                className="rounded-2xl border border-white/10 bg-white/10 px-4 py-6 text-left text-sm"
+                className="rounded-2xl border border-white/10 bg-white/10 px-4 py-6 text-left text-sm backdrop-blur"
                 onDrop={onDrop}
                 onDragOver={(e) => e.preventDefault()}
               >
