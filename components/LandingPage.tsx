@@ -210,12 +210,14 @@ export default function LandingPage() {
               <div
                 key={filter.name}
                 className={`filter-tile relative break-inside-avoid overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${filter.className} p-5 shadow-[0_30px_80px_rgba(0,0,0,0.35)]`}
-                style={{
-                  height: `${220 + (index % 3) * 60}px`,
-                  animationDelay: `${index * 0.18}s`,
-                  animationDuration: `${16 + (index % 4) * 3}s`,
-                  ["--tilt" as "string"]: `${(index % 2 === 0 ? 1 : -1) * (6 + (index % 3) * 3)}deg`
-                }}
+                style={
+                  {
+                    height: `${220 + (index % 3) * 60}px`,
+                    animationDelay: `${index * 0.18}s`,
+                    animationDuration: `${16 + (index % 4) * 3}s`,
+                    "--tilt": `${(index % 2 === 0 ? 1 : -1) * (6 + (index % 3) * 3)}deg`
+                  } as React.CSSProperties
+                }
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.12),transparent_55%)]" />
                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/70 to-transparent" />
