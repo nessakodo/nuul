@@ -103,6 +103,12 @@ export default function StudioClient() {
     if (typeof window === "undefined") return;
     const seen = window.localStorage.getItem("nuul-mobile-filters") === "true";
     const isMobile = window.innerWidth < 900;
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get("mode");
+    if (mode === "filters") {
+      setShowFilterOnboarding(true);
+      return;
+    }
     if (!seen && isMobile) setShowFilterOnboarding(true);
   }, []);
 
@@ -311,7 +317,7 @@ export default function StudioClient() {
       ) : null}
       <GlassPanel className="p-5">
         <div className="space-y-6">
-          <div className="order-2 lg:order-3">
+          <div className="order-3 lg:order-3">
             <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Import</div>
             <div className="mt-3 flex flex-col gap-3">
               <button
@@ -344,13 +350,13 @@ export default function StudioClient() {
             </div>
           </div>
 
-          <div className="order-1 lg:order-1 lg:hidden">
+          <div className="order-2 lg:order-2 lg:hidden">
             <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-xs text-[color:var(--muted)]">
               Start with a filter or preset. Import a Lightroom preset for quick styling.
             </div>
           </div>
 
-          <div className="order-0 lg:order-2">
+          <div className="order-1 lg:order-2">
             <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">Filters</div>
             <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
               {["Graphite", "Warm Film", "Soft Grain", "Noir"].map((label) => (

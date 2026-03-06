@@ -2,9 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import anime from "animejs";
-import { playHover, playReveal } from "@/lib/sfx";
-import Link from "next/link";
-import { startDrone, stopDrone } from "@/lib/sfx";
+import { playHover, playReveal, startDrone } from "@/lib/sfx";
+import { useRouter } from "next/navigation";
 
 const introKey = "nuul-intro-seen";
 
@@ -12,6 +11,7 @@ export default function IntroSequence() {
   const [visible, setVisible] = useState(false);
   const [phase, setPhase] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const seen = sessionStorage.getItem(introKey) === "true";
@@ -42,8 +42,12 @@ export default function IntroSequence() {
 
   useEffect(() => {
     if (!visible) return;
-    startDrone();
-    return () => stopDrone();
+    const handler = () => {
+      startDrone();
+      window.removeEventListener("pointerdown", handler);
+    };
+    window.addEventListener("pointerdown", handler, { once: true });
+    return () => window.removeEventListener("pointerdown", handler);
   }, [visible]);
 
   useEffect(() => {
@@ -98,7 +102,7 @@ export default function IntroSequence() {
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 text-white backdrop-blur-md">
-      <div className="absolute inset-0">
+      <div className="pointer-events-none absolute inset-0">
         <canvas ref={canvasRef} className="absolute inset-0 opacity-70" />
         <div className="scanline-layer absolute inset-0 opacity-30" />
         <div className="nuul-intro-orb orb absolute left-1/2 top-1/2 h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full" />
@@ -121,14 +125,16 @@ export default function IntroSequence() {
           }`}
         >
           {[
-            { label: "Start with filters", href: "/studio", tone: "primary" },
+            { label: "Start with filters", href: "/studio?mode=filters", tone: "primary" },
             { label: "Enter safe export", href: "/studio", tone: "secondary" },
             { label: "Explore receipts", href: "/receipts", tone: "ghost" }
           ].map((action) => (
-            <Link
+            <button
               key={action.label}
-              href={action.href}
-              onClick={() => playReveal()}
+              onClick={() => {
+                playReveal();
+                router.push(action.href);
+              }}
               onMouseEnter={() => playHover()}
               className={`rounded-2xl border px-6 py-3 text-xs uppercase tracking-[0.2em] backdrop-blur transition ${
                 action.tone === "primary"
@@ -139,7 +145,7 @@ export default function IntroSequence() {
               }`}
             >
               {action.label}
-            </Link>
+            </button>
           ))}
         </div>
       </div>
