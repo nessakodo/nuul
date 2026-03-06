@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import GlassPanel from "@/components/GlassPanel";
 import PresetSelector from "@/components/PresetSelector";
 import RiskMeter from "@/components/RiskMeter";
