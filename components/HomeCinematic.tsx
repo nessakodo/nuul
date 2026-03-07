@@ -152,7 +152,7 @@ export default function HomeCinematic() {
                 key={filter.name}
                 className="filter-card absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/15 bg-white/5 p-4 backdrop-blur"
                 style={{
-                  transform: `rotateY(${(360 / filters.length) * index}deg) translateZ(320px) rotateX(${filter.pitch}deg) translateY(${filter.offset}px)`,
+                  ["--card-transform" as "--card-transform"]: `rotateY(${(360 / filters.length) * index}deg) translateZ(320px) rotateX(${filter.pitch}deg) translateY(${filter.offset}px)`,
                   width: `${filter.width}px`,
                   height: `${filter.height}px`,
                   animationDelay: `${index * 0.22}s`,
@@ -175,7 +175,7 @@ export default function HomeCinematic() {
         >
           <div
             className={`mb-5 transition-all duration-700 ${
-              phase === "cta" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              phase === "cta" ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
             }`}
           >
             <div className="text-[0.65rem] uppercase tracking-[0.5em] text-white/60">NUUL STUDIO</div>
