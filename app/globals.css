@@ -91,6 +91,27 @@ button {
   opacity: 0.85;
 }
 
+.liquid-orb {
+  background: radial-gradient(circle at 30% 20%, rgba(210, 180, 135, 0.45), transparent 55%),
+    radial-gradient(circle at 70% 35%, rgba(140, 120, 90, 0.35), transparent 60%),
+    radial-gradient(circle at 45% 75%, rgba(100, 90, 80, 0.4), transparent 55%);
+  filter: blur(40px);
+  opacity: 0.8;
+  animation: liquidPulse 18s ease-in-out infinite;
+}
+
+@keyframes liquidPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+}
+
 .range-theme {
   -webkit-appearance: none;
   appearance: none;

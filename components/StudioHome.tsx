@@ -25,19 +25,28 @@ export default function StudioHome() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <div className="text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">Safe Export</div>
-        <div className="flex gap-2 rounded-full border border-white/10 bg-white/10 px-2 py-1 text-xs">
-          {tabs.map((item) => (
-            <button
-              key={item.id}
-              className={`rounded-full px-4 py-1 ${
-                tab === item.id ? "bg-white/30 text-[color:var(--text)]" : "text-[color:var(--muted)]"
+        <div className="text-xs uppercase tracking-[0.35em] text-[color:var(--muted)]">Safe Export</div>
+        <div className="flex items-center gap-3">
+          <div className="text-[0.65rem] uppercase tracking-[0.3em] text-[color:var(--muted)]">Enhanced</div>
+          <button
+            className={`h-7 w-12 rounded-full border transition ${
+              enhancedEnabled ? "border-white/40 bg-white/30" : "border-white/10 bg-white/5"
+            }`}
+            onClick={() => {
+              const next = !enhancedEnabled;
+              setEnhancedEnabled(next);
+              window.localStorage.setItem("nuul-enhanced", String(next));
+              if (!next) setTab("studio");
+              if (next) setTab("enhanced");
+            }}
+            aria-label="Toggle enhanced mode"
+          >
+            <span
+              className={`block h-5 w-5 translate-x-1 rounded-full bg-white/80 transition ${
+                enhancedEnabled ? "translate-x-6" : "translate-x-1"
               }`}
-              onClick={() => setTab(item.id)}
-            >
-              {item.label}
-            </button>
-          ))}
+            />
+          </button>
         </div>
       </div>
       {tab === "studio" ? <StudioLite /> : <StudioClient />}

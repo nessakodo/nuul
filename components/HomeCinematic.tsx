@@ -118,24 +118,24 @@ export default function HomeCinematic() {
   return (
     <div className="relative min-h-screen bg-black text-white">
       <GradientBackdrop />
-      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-10 text-center">
+      <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pb-20 pt-10 text-center">
         <div className="pointer-events-none absolute inset-0">
           <canvas ref={canvasRef} className="absolute inset-0 opacity-70" />
           <div className="scanline-layer absolute inset-0 opacity-30" />
-          <div className="orb absolute left-1/2 top-1/2 h-[720px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full" />
+          <div className="liquid-orb absolute left-1/2 top-1/2 h-[720px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/95" />
         </div>
 
-        <div className="relative z-10">
+        <div className="relative z-10 max-w-2xl">
           <div className="text-[0.65rem] uppercase tracking-[0.5em] text-white/60">NUUL STUDIO</div>
-          <h1 className="mt-5 text-5xl font-semibold tracking-[-0.03em] md:text-6xl">Safe Export</h1>
-          <p className="mt-4 text-sm text-white/70 md:text-base">
+          <h1 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">Safe Export</h1>
+          <p className="mt-3 text-sm text-white/70 md:text-base">
             Local-first privacy for screenshots. Filters first, leaks last. No uploads. No accounts.
           </p>
-          <div className="mt-3 text-[0.7rem] uppercase tracking-[0.4em] text-white/50">Set the mood</div>
+          <div className="mt-2 text-[0.7rem] uppercase tracking-[0.4em] text-white/50">Set the mood</div>
         </div>
 
-        <div className="relative z-10 mt-3 h-[480px] w-full max-w-4xl">
+        <div className="relative z-10 mt-2 h-[46vh] w-full max-w-4xl min-h-[280px] max-h-[420px]">
           <div
             ref={ringRef}
             className={`filter-ring absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 ${
@@ -163,7 +163,7 @@ export default function HomeCinematic() {
         </div>
 
         <div
-          className={`relative z-10 mt-6 pb-16 transition-all duration-700 ${
+          className={`relative z-10 mt-4 pb-20 transition-all duration-700 ${
             phase === "cta" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
@@ -174,7 +174,7 @@ export default function HomeCinematic() {
           >
             Upload your image(s)
           </Link>
-          <div className="mt-4 text-[0.65rem] uppercase tracking-[0.4em] text-white/50">
+          <div className="mt-6 text-[0.65rem] uppercase tracking-[0.4em] text-white/50">
             Protect in style
           </div>
         </div>
