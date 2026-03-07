@@ -7,16 +7,16 @@ import GradientBackdrop from "@/components/GradientBackdrop";
 import { playHover, startDrone } from "@/lib/sfx";
 
 const filters = [
-  { name: "Graphite", note: "Matte blacks, clean UI", hue: "#1b1d22" },
-  { name: "Warm Film", note: "Soft amber shadows", hue: "#3a2b22" },
-  { name: "Soft Grain", note: "Muted highlights", hue: "#2a2c33" },
-  { name: "Noir", note: "High contrast grit", hue: "#16181c" },
-  { name: "Studio", note: "Muted neutrals", hue: "#2c2422" },
-  { name: "Chrome", note: "Cold clean edges", hue: "#222a33" },
-  { name: "Dusk", note: "Blue hour haze", hue: "#2a2434" },
-  { name: "Ritual", note: "Gold undertones", hue: "#3c2d23" },
-  { name: "Mercury", note: "Silver night", hue: "#24282e" },
-  { name: "Nightfall", note: "Satin shadows", hue: "#14151a" }
+  { name: "Graphite", note: "Matte blacks, clean UI", hue: "#1b1d22", width: 200, height: 280, offset: -40, pitch: -6 },
+  { name: "Warm Film", note: "Soft amber shadows", hue: "#3a2b22", width: 180, height: 240, offset: 60, pitch: 8 },
+  { name: "Soft Grain", note: "Muted highlights", hue: "#2a2c33", width: 170, height: 230, offset: -120, pitch: 10 },
+  { name: "Noir", note: "High contrast grit", hue: "#16181c", width: 190, height: 260, offset: 20, pitch: -4 },
+  { name: "Studio", note: "Muted neutrals", hue: "#2c2422", width: 210, height: 300, offset: -10, pitch: 6 },
+  { name: "Chrome", note: "Cold clean edges", hue: "#222a33", width: 175, height: 220, offset: 120, pitch: -8 },
+  { name: "Dusk", note: "Blue hour haze", hue: "#2a2434", width: 185, height: 250, offset: -80, pitch: 4 },
+  { name: "Ritual", note: "Gold undertones", hue: "#3c2d23", width: 205, height: 270, offset: 90, pitch: -5 },
+  { name: "Mercury", note: "Silver night", hue: "#24282e", width: 165, height: 210, offset: -150, pitch: 12 },
+  { name: "Nightfall", note: "Satin shadows", hue: "#14151a", width: 195, height: 265, offset: 140, pitch: -12 }
 ];
 
 export default function HomeCinematic() {
@@ -132,10 +132,10 @@ export default function HomeCinematic() {
           <p className="mt-4 text-sm text-white/70 md:text-base">
             Local-first privacy for screenshots. Filters first, leaks last. No uploads. No accounts.
           </p>
-          <div className="mt-4 text-[0.7rem] uppercase tracking-[0.4em] text-white/50">Set the mood</div>
+          <div className="mt-3 text-[0.7rem] uppercase tracking-[0.4em] text-white/50">Set the mood</div>
         </div>
 
-        <div className="relative z-10 mt-6 h-[420px] w-full max-w-3xl">
+        <div className="relative z-10 mt-3 h-[480px] w-full max-w-4xl">
           <div
             ref={ringRef}
             className={`filter-ring absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 ${
@@ -146,9 +146,11 @@ export default function HomeCinematic() {
             {filters.map((filter, index) => (
               <div
                 key={filter.name}
-                className="filter-card absolute left-1/2 top-1/2 h-[220px] w-[176px] -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/15 bg-white/5 p-4 backdrop-blur"
+                className="filter-card absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/15 bg-white/5 p-4 backdrop-blur"
                 style={{
-                  transform: `rotateY(${(360 / filters.length) * index}deg) translateZ(280px)`,
+                  transform: `rotateY(${(360 / filters.length) * index}deg) translateZ(320px) rotateX(${filter.pitch}deg) translateY(${filter.offset}px)`,
+                  width: `${filter.width}px`,
+                  height: `${filter.height}px`,
                   ["--card-color" as "--card-color"]: filter.hue
                 } as React.CSSProperties}
               >
@@ -161,7 +163,7 @@ export default function HomeCinematic() {
         </div>
 
         <div
-          className={`relative z-10 mt-8 pb-12 transition-all duration-700 ${
+          className={`relative z-10 mt-6 pb-16 transition-all duration-700 ${
             phase === "cta" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
