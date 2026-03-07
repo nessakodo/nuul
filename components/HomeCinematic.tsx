@@ -110,7 +110,9 @@ export default function HomeCinematic() {
 
   const ringStyle = useMemo(
     () => ({
-      transform: reducedMotion ? "none" : "translateZ(0) translateX(0px)"
+      transform: reducedMotion ? "none" : "translateZ(0)",
+      marginLeft: 0,
+      marginRight: 0
     }),
     [reducedMotion]
   );
@@ -126,8 +128,14 @@ export default function HomeCinematic() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/95" />
         </div>
 
-        <div className="relative z-10 max-w-2xl">
-          <div className="text-[0.65rem] uppercase tracking-[0.6em] text-white/60">NUUL</div>
+        <div className="relative z-10 max-w-2xl transition-all duration-700">
+          <div
+            className={`text-[0.7rem] uppercase tracking-[0.6em] ${
+              phase === "cta" ? "opacity-0 -translate-y-3" : "opacity-100 translate-y-0"
+            } bg-gradient-to-r from-[#e0c9a0] via-[#bda47a] to-[#7c6a54] bg-clip-text text-transparent transition-all duration-700`}
+          >
+            NUUL
+          </div>
         </div>
 
         <div className="relative z-10 mt-2 flex h-[46vh] w-full max-w-4xl min-h-[280px] max-h-[420px] items-center justify-center">
