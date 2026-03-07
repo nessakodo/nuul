@@ -145,7 +145,7 @@ export default function HomeCinematic() {
             <div
               ref={ringRef}
               className={`filter-ring h-full w-full ${
-                phase === "exit" ? "ring-exit" : phase === "cta" ? "ring-hidden" : ""
+                phase === "exit" ? "ring-exit" : phase === "cta" ? "ring-hidden" : "ring-focus"
               }`}
               style={ringStyle}
             >
@@ -159,7 +159,7 @@ export default function HomeCinematic() {
               return (
               <div
                 key={filter.name}
-                className="filter-card absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/15 bg-white/5 p-4 backdrop-blur"
+                className="filter-card absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-3xl border border-white/15 bg-white/5 p-4 text-center backdrop-blur"
                 style={{
                   ["--card-transform" as "--card-transform"]: `rotateY(${lon}deg) translateZ(${z}px) translateY(${y}px) scale(${scale.toFixed(2)})`,
                   width: `${Math.round(filter.width * scale)}px`,
