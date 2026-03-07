@@ -135,7 +135,7 @@ export default function HomeCinematic() {
           <div className="mt-4 text-[0.7rem] uppercase tracking-[0.4em] text-white/50">Set the mood</div>
         </div>
 
-        <div className="relative z-10 mt-12 h-[320px] w-full max-w-2xl">
+        <div className="relative z-10 mt-6 h-[420px] w-full max-w-3xl">
           <div
             ref={ringRef}
             className={`filter-ring absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 ${
@@ -146,14 +146,14 @@ export default function HomeCinematic() {
             {filters.map((filter, index) => (
               <div
                 key={filter.name}
-                className="filter-card absolute left-1/2 top-1/2 h-20 w-32 -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/15 bg-white/5 p-3 backdrop-blur"
+                className="filter-card absolute left-1/2 top-1/2 h-[220px] w-[176px] -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/15 bg-white/5 p-4 backdrop-blur"
                 style={{
-                  transform: `rotateY(${(360 / filters.length) * index}deg) translateZ(220px)`,
+                  transform: `rotateY(${(360 / filters.length) * index}deg) translateZ(280px)`,
                   ["--card-color" as "--card-color"]: filter.hue
                 } as React.CSSProperties}
               >
-                <div className="text-xs font-semibold">{filter.name}</div>
-                <div className="mt-1 text-[0.6rem] text-white/60">{filter.note}</div>
+                <div className="text-sm font-semibold">{filter.name}</div>
+                <div className="mt-1 text-[0.65rem] text-white/60">{filter.note}</div>
                 <div className="filter-sheen absolute inset-0 rounded-2xl" />
               </div>
             ))}
@@ -161,7 +161,7 @@ export default function HomeCinematic() {
         </div>
 
         <div
-          className={`relative z-10 mt-10 transition-all duration-700 ${
+          className={`relative z-10 mt-8 pb-12 transition-all duration-700 ${
             phase === "cta" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >

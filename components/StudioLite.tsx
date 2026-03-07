@@ -13,10 +13,12 @@ const ocrClient = new OCRClient();
 const receiptKey = "nuul-receipts";
 
 const presets = [
-  { id: "graphite", label: "Graphite" },
-  { id: "warm", label: "Warm Film" },
-  { id: "noir", label: "Noir" },
-  { id: "studio", label: "Studio" }
+  { id: "graphite", label: "Graphite", tone: "from-[#0d0f12] via-[#1c1f27] to-[#30323b]" },
+  { id: "warm", label: "Warm Film", tone: "from-[#1a1311] via-[#3c2d23] to-[#6a503b]" },
+  { id: "noir", label: "Noir", tone: "from-[#0b0c0f] via-[#1a1c22] to-[#2a2d36]" },
+  { id: "studio", label: "Studio", tone: "from-[#141115] via-[#2d2424] to-[#3a3130]" },
+  { id: "chrome", label: "Chrome", tone: "from-[#0f1419] via-[#24303a] to-[#3a4853]" },
+  { id: "dusk", label: "Dusk", tone: "from-[#111018] via-[#2a2434] to-[#443b4f]" }
 ];
 
 function downloadBlob(blob: Blob, name: string) {
@@ -148,14 +150,11 @@ export default function StudioLite() {
       <GlassPanel className="p-6">
         <div className="text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">Upload</div>
         <div className="mt-4 space-y-3">
-          <button
-            className="rounded-2xl border border-white/10 bg-white/10 px-4 py-6 text-left text-sm backdrop-blur"
-            onClick={() => fileInputRef.current?.click()}
-          >
+          <label className="flex w-full cursor-pointer flex-col rounded-2xl border border-white/10 bg-white/10 px-4 py-6 text-left text-sm backdrop-blur">
             Upload image(s)
-            <div className="mt-1 text-xs text-[color:var(--muted)]">JPG, PNG, WEBP · Batch supported</div>
-          </button>
-          <input ref={fileInputRef} type="file" className="hidden" onChange={onPick} accept="image/*" multiple />
+            <span className="mt-1 text-xs text-[color:var(--muted)]">JPG, PNG, WEBP · Batch supported</span>
+            <input ref={fileInputRef} type="file" className="hidden" onChange={onPick} accept="image/*" multiple />
+          </label>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-[color:var(--muted)]">
             {queue.length
               ? `${queue.length} file(s) ready · ${currentIndex + 1} of ${queue.length}`
@@ -166,16 +165,22 @@ export default function StudioLite() {
 
       <GlassPanel className="p-6">
         <div className="text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">Set the mood</div>
-        <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
+        <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
           {presets.map((item) => (
             <button
               key={item.id}
-              className={`rounded-full border px-3 py-2 text-left ${
-                preset === item.id ? "border-white/40 bg-white/20" : "border-white/10 bg-white/10"
+              className={`relative h-28 overflow-hidden rounded-2xl border text-left ${
+                preset === item.id ? "border-white/40" : "border-white/10"
               }`}
               onClick={() => setPreset(item.id)}
             >
-              {item.label}
+              <div className={`absolute inset-0 bg-gradient-to-br ${item.tone}`} />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.14),transparent_55%)]" />
+              <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/70 to-transparent" />
+              <div className="relative z-10 p-3">
+                <div className="text-sm font-semibold text-white">{item.label}</div>
+                <div className="text-[0.6rem] text-white/60">Preview</div>
+              </div>
             </button>
           ))}
           <label className="col-span-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 text-left">
@@ -185,7 +190,7 @@ export default function StudioLite() {
         </div>
 
         <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-[color:var(--muted)]">
-          {fileInfo ? leakSummary : "Upload a screenshot to scan for leaks before export."}
+          {fileInfo ? leakSummary : "We scan locally for API keys, QR codes, and metadata before export."}
         </div>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
