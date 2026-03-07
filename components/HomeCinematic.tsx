@@ -130,7 +130,7 @@ export default function HomeCinematic() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/95" />
         </div>
 
-        <div className="relative z-10 max-w-2xl transition-all duration-700">
+        <div className="relative z-10 -mt-2 max-w-2xl transition-all duration-700">
           <div
             className={`text-[0.7rem] uppercase tracking-[0.6em] ${
               phase === "cta" ? "opacity-0 -translate-y-3" : "opacity-100 translate-y-0"
@@ -150,20 +150,29 @@ export default function HomeCinematic() {
               style={ringStyle}
             >
             {filters.map((filter, index) => {
-              const lat = -60 + (120 / (filters.length - 1)) * index;
-              const lon = (360 / filters.length) * index;
-              const radius = 300;
-              const y = Math.sin((lat * Math.PI) / 180) * 110;
-              const z = Math.cos((lat * Math.PI) / 180) * radius;
-              const scale = 0.78 + Math.cos((lat * Math.PI) / 180) * 0.32;
+              const grid = [
+                { x: -220, y: -120, s: 0.85 },
+                { x: 10, y: -140, s: 0.95 },
+                { x: 190, y: -110, s: 0.8 },
+                { x: -260, y: 20, s: 0.9 },
+                { x: -20, y: 10, s: 1.05 },
+                { x: 210, y: 30, s: 0.88 },
+                { x: -160, y: 150, s: 0.82 },
+                { x: 40, y: 160, s: 0.98 },
+                { x: 240, y: 150, s: 0.78 },
+                { x: -40, y: -260, s: 0.7 },
+                { x: 120, y: -250, s: 0.72 },
+                { x: -120, y: 260, s: 0.68 }
+              ];
+              const pos = grid[index % grid.length];
               return (
               <div
                 key={filter.name}
                 className="filter-card absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-3xl border border-white/15 bg-white/5 p-4 text-center backdrop-blur"
                 style={{
-                  ["--card-transform" as "--card-transform"]: `rotateY(${lon}deg) translateZ(${z}px) translateY(${y}px) scale(${scale.toFixed(2)})`,
-                  width: `${Math.round(filter.width * scale)}px`,
-                  height: `${Math.round(filter.height * scale)}px`,
+                  ["--card-transform" as "--card-transform"]: `translate3d(${pos.x}px, ${pos.y}px, 0) scale(${pos.s}) rotateY(${index * 8}deg)`,
+                  width: `${Math.round(filter.width * pos.s)}px`,
+                  height: `${Math.round(filter.height * pos.s)}px`,
                   animationDelay: `${index * 0.22}s`,
                   ["--card-color" as "--card-color"]: filter.hue
                 } as React.CSSProperties}
