@@ -130,13 +130,14 @@ export default function HomeCinematic() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/95" />
         </div>
 
-        <div className="relative z-10 -mt-2 max-w-2xl">
-          <div className="text-[0.65rem] uppercase tracking-[0.5em] text-white/60">NUUL STUDIO</div>
-          <h1 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">Safe Export</h1>
-          <p className="mt-3 text-sm text-white/70 md:text-base">
-            Local-first privacy for screenshots. Filters first, leaks last. No uploads. No accounts.
-          </p>
-          <div className="mt-2 text-[0.7rem] uppercase tracking-[0.4em] text-white/50">Set the mood</div>
+        <div className="relative z-10 -mt-2 max-w-2xl transition-all duration-700">
+          <div
+            className={`text-[0.7rem] uppercase tracking-[0.6em] ${
+              phase === "cta" ? "opacity-0 -translate-y-3" : "opacity-100 translate-y-0"
+            } bg-gradient-to-r from-[#e0c9a0] via-[#bda47a] to-[#7c6a54] bg-clip-text text-transparent transition-all duration-700`}
+          >
+            NUUL
+          </div>
         </div>
 
         <div className="relative z-10 mt-2 flex h-[46vh] w-full max-w-4xl min-h-[280px] max-h-[420px] items-center justify-center">
@@ -149,18 +150,19 @@ export default function HomeCinematic() {
               style={ringStyle}
             >
             {filters.map((filter, index) => {
-              const lat = -55 + (110 / (filters.length - 1)) * index;
-              const lon = (360 / filters.length) * index;
-              const radius = 280;
-              const y = Math.sin((lat * Math.PI) / 180) * 110;
-              const z = Math.cos((lat * Math.PI) / 180) * radius;
-              const scale = 0.78 + Math.cos((lat * Math.PI) / 180) * 0.32;
+              const phi = Math.acos(-1 + (2 * index) / (filters.length - 1));
+              const theta = Math.PI * (1 + Math.sqrt(5)) * index;
+              const radius = 260;
+              const x = Math.cos(theta) * Math.sin(phi) * radius;
+              const y = Math.sin(theta) * Math.sin(phi) * (radius * 0.55);
+              const z = Math.cos(phi) * radius;
+              const scale = 0.7 + (z / radius + 1) * 0.2;
               return (
               <div
                 key={filter.name}
                 className="filter-card absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-3xl border border-white/15 bg-white/5 p-4 text-center backdrop-blur"
                 style={{
-                  ["--card-transform" as "--card-transform"]: `rotateY(${lon}deg) translateZ(${z}px) translateY(${y}px) scale(${scale.toFixed(2)})`,
+                  ["--card-transform" as "--card-transform"]: `translate3d(${x}px, ${y}px, ${z}px) rotateY(${theta * (180 / Math.PI)}deg) scale(${scale.toFixed(2)})`,
                   width: `${Math.round(filter.width * scale)}px`,
                   height: `${Math.round(filter.height * scale)}px`,
                   animationDelay: `${index * 0.22}s`,
@@ -177,7 +179,23 @@ export default function HomeCinematic() {
           </div>
         </div>
 
-        <div className="relative z-10 mt-6 flex w-full flex-col items-center pb-20 text-center">
+        <div
+          className={`relative z-10 mt-4 flex w-full flex-col items-center pb-20 text-center transition-all duration-700 ${
+            phase === "cta" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+        >
+          <div
+            className={`mb-5 transition-all duration-700 ${
+              phase === "cta" ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+            }`}
+          >
+            <div className="text-[0.65rem] uppercase tracking-[0.5em] text-white/60">NUUL STUDIO</div>
+            <h1 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">Safe Export</h1>
+            <p className="mt-3 text-sm text-white/70 md:text-base">
+              Local-first privacy for screenshots. Filters first, leaks last. No uploads. No accounts.
+            </p>
+            <div className="mt-2 text-[0.7rem] uppercase tracking-[0.4em] text-white/50">Set the mood</div>
+          </div>
           <Link
             href="/studio?import=1"
             onMouseEnter={() => playHover()}
