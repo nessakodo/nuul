@@ -155,7 +155,7 @@ export default function HomeCinematic() {
                   transform: `rotateY(${(360 / filters.length) * index}deg) translateZ(320px) rotateX(${filter.pitch}deg) translateY(${filter.offset}px)`,
                   width: `${filter.width}px`,
                   height: `${filter.height}px`,
-                  animationDelay: `${index * 0.25}s`,
+                  animationDelay: `${index * 0.22}s`,
                   ["--card-color" as "--card-color"]: filter.hue
                 } as React.CSSProperties}
               >

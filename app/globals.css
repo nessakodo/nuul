@@ -178,7 +178,7 @@ button {
 .filter-ring .filter-card {
   background: linear-gradient(140deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.4));
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-  animation: cardFocus 6s ease-in-out infinite;
+  animation: cardIntro 0.7s ease both, cardFocus 6s ease-in-out infinite;
 }
 
 .filter-ring .filter-card::after {
@@ -197,12 +197,12 @@ button {
 
 .ring-exit {
   opacity: 0;
-  transform: rotateY(120deg);
+  transform: rotateY(120deg) scale(0.85);
 }
 
 .ring-hidden {
   opacity: 0;
-  transform: rotateY(160deg);
+  transform: rotateY(160deg) scale(0.6);
 }
 
 @keyframes cardFocus {
@@ -217,6 +217,17 @@ button {
   100% {
     filter: blur(4px);
     transform: scale(0.92);
+  }
+}
+
+@keyframes cardIntro {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
