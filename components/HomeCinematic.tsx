@@ -7,16 +7,18 @@ import GradientBackdrop from "@/components/GradientBackdrop";
 import { playHover, startDrone } from "@/lib/sfx";
 
 const filters = [
-  { name: "Graphite", note: "Matte blacks, clean UI", hue: "#1b1d22", width: 200, height: 280, offset: -40, pitch: -6 },
-  { name: "Warm Film", note: "Soft amber shadows", hue: "#3a2b22", width: 180, height: 240, offset: 60, pitch: 8 },
-  { name: "Soft Grain", note: "Muted highlights", hue: "#2a2c33", width: 170, height: 230, offset: -120, pitch: 10 },
-  { name: "Noir", note: "High contrast grit", hue: "#16181c", width: 190, height: 260, offset: 20, pitch: -4 },
-  { name: "Studio", note: "Muted neutrals", hue: "#2c2422", width: 210, height: 300, offset: -10, pitch: 6 },
-  { name: "Chrome", note: "Cold clean edges", hue: "#222a33", width: 175, height: 220, offset: 120, pitch: -8 },
-  { name: "Dusk", note: "Blue hour haze", hue: "#2a2434", width: 185, height: 250, offset: -80, pitch: 4 },
-  { name: "Ritual", note: "Gold undertones", hue: "#3c2d23", width: 205, height: 270, offset: 90, pitch: -5 },
-  { name: "Mercury", note: "Silver night", hue: "#24282e", width: 165, height: 210, offset: -150, pitch: 12 },
-  { name: "Nightfall", note: "Satin shadows", hue: "#14151a", width: 195, height: 265, offset: 140, pitch: -12 }
+  { name: "Graphite", note: "Matte blacks, clean UI", hue: "#1b1d22", width: 200, height: 280 },
+  { name: "Warm Film", note: "Soft amber shadows", hue: "#3a2b22", width: 180, height: 240 },
+  { name: "Soft Grain", note: "Muted highlights", hue: "#2a2c33", width: 170, height: 230 },
+  { name: "Noir", note: "High contrast grit", hue: "#16181c", width: 190, height: 260 },
+  { name: "Studio", note: "Muted neutrals", hue: "#2c2422", width: 210, height: 300 },
+  { name: "Chrome", note: "Cold clean edges", hue: "#222a33", width: 175, height: 220 },
+  { name: "Dusk", note: "Blue hour haze", hue: "#2a2434", width: 185, height: 250 },
+  { name: "Ritual", note: "Gold undertones", hue: "#3c2d23", width: 205, height: 270 },
+  { name: "Mercury", note: "Silver night", hue: "#24282e", width: 165, height: 210 },
+  { name: "Nightfall", note: "Satin shadows", hue: "#14151a", width: 195, height: 265 },
+  { name: "Sable", note: "Muted slate", hue: "#1a1c20", width: 175, height: 230 },
+  { name: "Lumen", note: "Soft glow", hue: "#2a2520", width: 185, height: 240 }
 ];
 
 export default function HomeCinematic() {
@@ -147,12 +149,18 @@ export default function HomeCinematic() {
               }`}
               style={ringStyle}
             >
-            {filters.map((filter, index) => (
+            {filters.map((filter, index) => {
+              const lat = -60 + (120 / (filters.length - 1)) * index;
+              const lon = (360 / filters.length) * index;
+              const radius = 300;
+              const y = Math.sin((lat * Math.PI) / 180) * 110;
+              const z = Math.cos((lat * Math.PI) / 180) * radius;
+              return (
               <div
                 key={filter.name}
                 className="filter-card absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/15 bg-white/5 p-4 backdrop-blur"
                 style={{
-                  ["--card-transform" as "--card-transform"]: `rotateY(${(360 / filters.length) * index}deg) translateZ(320px) rotateX(${filter.pitch}deg) translateY(${filter.offset}px)`,
+                  ["--card-transform" as "--card-transform"]: `rotateY(${lon}deg) translateZ(${z}px) translateY(${y}px)`,
                   width: `${filter.width}px`,
                   height: `${filter.height}px`,
                   animationDelay: `${index * 0.22}s`,
@@ -163,7 +171,8 @@ export default function HomeCinematic() {
                 <div className="mt-1 text-[0.65rem] text-white/60">{filter.note}</div>
                 <div className="filter-sheen absolute inset-0 rounded-2xl" />
               </div>
-            ))}
+            );
+            })}
             </div>
           </div>
         </div>
