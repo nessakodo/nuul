@@ -155,14 +155,15 @@ export default function HomeCinematic() {
               const radius = 300;
               const y = Math.sin((lat * Math.PI) / 180) * 110;
               const z = Math.cos((lat * Math.PI) / 180) * radius;
+              const scale = 0.78 + Math.cos((lat * Math.PI) / 180) * 0.32;
               return (
               <div
                 key={filter.name}
                 className="filter-card absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/15 bg-white/5 p-4 backdrop-blur"
                 style={{
-                  ["--card-transform" as "--card-transform"]: `rotateY(${lon}deg) translateZ(${z}px) translateY(${y}px)`,
-                  width: `${filter.width}px`,
-                  height: `${filter.height}px`,
+                  ["--card-transform" as "--card-transform"]: `rotateY(${lon}deg) translateZ(${z}px) translateY(${y}px) scale(${scale.toFixed(2)})`,
+                  width: `${Math.round(filter.width * scale)}px`,
+                  height: `${Math.round(filter.height * scale)}px`,
                   animationDelay: `${index * 0.22}s`,
                   ["--card-color" as "--card-color"]: filter.hue
                 } as React.CSSProperties}
