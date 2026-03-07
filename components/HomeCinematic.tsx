@@ -135,10 +135,10 @@ export default function HomeCinematic() {
           <div className="mt-2 text-[0.7rem] uppercase tracking-[0.4em] text-white/50">Set the mood</div>
         </div>
 
-        <div className="relative z-10 mt-2 h-[46vh] w-full max-w-4xl min-h-[280px] max-h-[420px]">
+        <div className="relative z-10 mt-2 flex h-[46vh] w-full max-w-4xl min-h-[280px] max-h-[420px] items-center justify-center">
           <div
             ref={ringRef}
-            className={`filter-ring absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 ${
+            className={`filter-ring relative h-full w-full ${
               phase === "exit" ? "ring-exit" : phase === "cta" ? "ring-hidden" : ""
             }`}
             style={ringStyle}
