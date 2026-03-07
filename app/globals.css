@@ -165,9 +165,20 @@ button {
   translate: -50% -50%;
 }
 
+.ring-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .filter-ring .filter-card {
   background: linear-gradient(140deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.4));
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  animation: cardFocus 6s ease-in-out infinite;
 }
 
 .filter-ring .filter-card::after {
@@ -186,12 +197,27 @@ button {
 
 .ring-exit {
   opacity: 0;
-  transform: rotateY(120deg) scale(0.85);
+  transform: rotateY(120deg);
 }
 
 .ring-hidden {
   opacity: 0;
-  transform: scale(0.6);
+  transform: rotateY(160deg);
+}
+
+@keyframes cardFocus {
+  0% {
+    filter: blur(4px);
+    transform: scale(0.92);
+  }
+  45% {
+    filter: blur(0px);
+    transform: scale(1.02);
+  }
+  100% {
+    filter: blur(4px);
+    transform: scale(0.92);
+  }
 }
 
 .masonry-3d {

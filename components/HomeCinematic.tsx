@@ -139,13 +139,14 @@ export default function HomeCinematic() {
         </div>
 
         <div className="relative z-10 mt-2 flex h-[46vh] w-full max-w-4xl min-h-[280px] max-h-[420px] items-center justify-center">
-          <div
-            ref={ringRef}
-            className={`filter-ring relative h-full w-full ${
-              phase === "exit" ? "ring-exit" : phase === "cta" ? "ring-hidden" : ""
-            }`}
-            style={ringStyle}
-          >
+          <div className="ring-shell relative h-full w-full">
+            <div
+              ref={ringRef}
+              className={`filter-ring h-full w-full ${
+                phase === "exit" ? "ring-exit" : phase === "cta" ? "ring-hidden" : ""
+              }`}
+              style={ringStyle}
+            >
             {filters.map((filter, index) => (
               <div
                 key={filter.name}
@@ -154,6 +155,7 @@ export default function HomeCinematic() {
                   transform: `rotateY(${(360 / filters.length) * index}deg) translateZ(320px) rotateX(${filter.pitch}deg) translateY(${filter.offset}px)`,
                   width: `${filter.width}px`,
                   height: `${filter.height}px`,
+                  animationDelay: `${index * 0.25}s`,
                   ["--card-color" as "--card-color"]: filter.hue
                 } as React.CSSProperties}
               >
@@ -162,11 +164,12 @@ export default function HomeCinematic() {
                 <div className="filter-sheen absolute inset-0 rounded-2xl" />
               </div>
             ))}
+            </div>
           </div>
         </div>
 
         <div
-          className={`relative z-10 mt-4 pb-20 transition-all duration-700 ${
+          className={`relative z-10 mt-4 flex w-full flex-col items-center pb-20 text-center transition-all duration-700 ${
             phase === "cta" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
