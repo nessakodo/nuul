@@ -110,7 +110,7 @@ export default function HomeCinematic() {
 
   const ringStyle = useMemo(
     () => ({
-      transform: reducedMotion ? "none" : undefined
+      transform: reducedMotion ? "none" : "translateZ(0) translateX(0px)"
     }),
     [reducedMotion]
   );
@@ -127,12 +127,7 @@ export default function HomeCinematic() {
         </div>
 
         <div className="relative z-10 max-w-2xl">
-          <div className="text-[0.65rem] uppercase tracking-[0.5em] text-white/60">NUUL STUDIO</div>
-          <h1 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">Safe Export</h1>
-          <p className="mt-3 text-sm text-white/70 md:text-base">
-            Local-first privacy for screenshots. Filters first, leaks last. No uploads. No accounts.
-          </p>
-          <div className="mt-2 text-[0.7rem] uppercase tracking-[0.4em] text-white/50">Set the mood</div>
+          <div className="text-[0.65rem] uppercase tracking-[0.6em] text-white/60">NUUL</div>
         </div>
 
         <div className="relative z-10 mt-2 flex h-[46vh] w-full max-w-4xl min-h-[280px] max-h-[420px] items-center justify-center">
@@ -167,6 +162,18 @@ export default function HomeCinematic() {
             phase === "cta" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
+          <div
+            className={`mb-5 transition-all duration-700 ${
+              phase === "cta" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
+          >
+            <div className="text-[0.65rem] uppercase tracking-[0.5em] text-white/60">NUUL STUDIO</div>
+            <h1 className="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">Safe Export</h1>
+            <p className="mt-3 text-sm text-white/70 md:text-base">
+              Local-first privacy for screenshots. Filters first, leaks last. No uploads. No accounts.
+            </p>
+            <div className="mt-2 text-[0.7rem] uppercase tracking-[0.4em] text-white/50">Set the mood</div>
+          </div>
           <Link
             href="/studio?import=1"
             onMouseEnter={() => playHover()}
